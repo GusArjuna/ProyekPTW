@@ -17,6 +17,7 @@ class WebController extends Controller
     }
     public function login()
     {
+        dd("tes");
         return view('login');
     }
     public function register()

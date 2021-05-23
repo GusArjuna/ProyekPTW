@@ -13,12 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// unused
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+// Route::get('/login', 'WebController@login');
+// Route::get('/register', 'WebController@register');
+
+
 Route::get('/', 'WebController@dashboard');
-Route::get('/login', 'WebController@login');
-Route::get('/register', 'WebController@register');
 Route::get('/signature', 'WebController@signature');
 Route::get('/mail', 'WebController@mail');
 Route::get('/vidcon', 'WebController@vidcon');
@@ -27,7 +30,7 @@ Route::post('/sendmail', 'WebController@sendmail');
 Route::post('/biodata', 'AkunController@update');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard-utama');
 })->name('dashboard');
 
 Route::get("janco", function () {
