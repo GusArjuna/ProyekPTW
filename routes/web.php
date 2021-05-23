@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('/', 'WebController@dashboard');
-// Route::get('/login', 'WebController@login');
-// Route::get('/register', 'WebController@register');
+Route::get('/login', 'WebController@login');
+Route::get('/register', 'WebController@register');
 Route::get('/signature', 'WebController@signature');
 Route::get('/mail', 'WebController@mail');
 Route::get('/vidcon', 'WebController@vidcon');
@@ -29,3 +29,9 @@ Route::post('/biodata', 'AkunController@update');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get("janco", function () {
+    $user = Zoom::user();
+
+    dd($user);
+});
