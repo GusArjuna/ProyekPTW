@@ -51,8 +51,9 @@
             </li>
             <hr>
             <li class="nav-item">
-                <form action="{{url('/adm" method="post')}}">
-                    <button class="btn btn-danger ml-5 mt-5" name="logout">log out</button>
+                <form action="{{route('logout')}}" method="POST">
+                    @csrf
+                    <button class="btn btn-danger ml-5 mt-5" name="logout" type="submit">log out</button>
                 </form>
             </li>
         </ul>
