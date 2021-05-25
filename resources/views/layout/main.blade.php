@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{url('css/bootstrap.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <!-- <link rel="shortcut icon" href="img/nhico.ico" type="image/x-icon"> -->
 </head>
 
@@ -29,26 +30,34 @@
             <div class="sidebar-heading">
                 Menu
             </div>
+            @if(auth()->user()->hasRole('admin'))
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{route('signatures.index')}}">
+                        <span>Digital Signature</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{route('mails.index')}}">
+                        <span>Mail</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{route('videoconferences.index')}}">
+                        <span>Video Converence</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{route('accounts.index')}}">
+                        <span>Manajemen Akun</span>
+                    </a>
+                </li>
+            @elseif(auth()->user()->hasRole('user'))
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{url('/signature')}}">
-                    <span>Digital Signature</span>
+                <a class="nav-link collapsed" href="#!">
+                    <span>Conferences</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{url('/mail')}}">
-                    <span>Mail</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{url('/vidcon')}}">
-                    <span>Video Converence</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{url('/akun')}}">
-                    <span>Manajemen Akun</span>
-                </a>
-            </li>
+            @endif
             <hr>
             <li class="nav-item">
                 <form action="{{route('logout')}}" method="POST">
@@ -66,6 +75,21 @@
                 </nav>
                 <!-- End of Topbar -->
                 <div class="container">
+                    @if ($message = Session::get('message'))
+                    <div class="alert alert-info alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button>	
+                        <strong>{{ $message }}</strong>
+                    </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>	
+                            <ul>
+                                {!! implode('', $errors->all('<li>:message</li>')) !!}
+                            </ul>
+                        </div>
+                    @endif
                     @yield('bagan')
                 </div>
             </div>
@@ -73,8 +97,10 @@
     </div>
     <script src="{{url('js/jquery-3.5.1.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script src="{{url('js/bootstrap.js')}}"></script>
     <script src="{{url('js/script.js')}}"></script>
+    @stack('scripts')
 </body>
 
 </html>

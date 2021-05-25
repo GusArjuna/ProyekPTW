@@ -13,28 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// unused
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-// Route::get('/login', 'WebController@login');
-// Route::get('/register', 'WebController@register');
-
-
 Route::get('/', 'WebController@dashboard');
-Route::get('/signature', 'WebController@signature');
-Route::get('/mail', 'WebController@mail');
-Route::get('/vidcon', 'WebController@vidcon');
-Route::get('/akun', 'AkunController@index');
-Route::post('/sendmail', 'WebController@sendmail');
-Route::post('/biodata', 'AkunController@update');
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::get('/', 'DashboardController@index');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard-utama');
-})->name('dashboard');
 
-Route::get("janco", function () {
-    $user = Zoom::user();
+    Route::get('/signatures', 'WebController@signature')->name('signatures.index');
+    Route::get('/mails', 'WebController@mail')->name('mails.index');
+    Route::get('/videoconferences', 'WebController@vidcon')->name('videoconferences.index');
 
-    dd($user);
+    Route::resource('accounts', "AccountController");
+
+    Route::post('/sendmails', 'WebController@sendmail');
 });

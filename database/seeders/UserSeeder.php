@@ -20,11 +20,14 @@ class UserSeeder extends Seeder
                 "username" => "admin",
                 "email"    => "admin@cangs.com",
                 "nbi"      => "1901001901",
+                "email_verified_at" => now(),
                 "password" => bcrypt("admin123"),
                 "created_at" => now(),
-                "updated_at" => now(),            ]
+                "updated_at" => now(),
+            ]
         ];
 
-        User::insert($users);
+        $user = User::insert($users);
+        $user->assignRole('admin');
     }
 }
