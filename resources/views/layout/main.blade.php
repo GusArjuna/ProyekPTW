@@ -32,18 +32,13 @@
             </div>
             @if(auth()->user()->hasRole('admin'))
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{route('signatures.index')}}">
-                        <span>Digital Signature</span>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link collapsed" href="{{route('mails.index')}}">
                         <span>Mail</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{route('videoconferences.index')}}">
-                        <span>Video Converence</span>
+                    <a class="nav-link collapsed" href="{{route('conferences.index')}}">
+                        <span>List Conference</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -52,11 +47,16 @@
                     </a>
                 </li>
             @elseif(auth()->user()->hasRole('user'))
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#!">
-                    <span>Conferences</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{route('signatures.index')}}">
+                        <span>Generate Signature</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#!">
+                        <span>Conferences</span>
+                    </a>
+                </li>
             @endif
             <hr>
             <li class="nav-item">

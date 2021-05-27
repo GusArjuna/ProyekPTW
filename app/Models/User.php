@@ -66,4 +66,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function userDetail()
+    {
+        return $this->hasOne(UserDetail::class);
+    }
+
+    public function getProfilePhotoUrlAttribute($value)
+    {
+        return str_replace('public/', '', $value);
+    }
 }

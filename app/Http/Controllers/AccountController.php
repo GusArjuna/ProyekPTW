@@ -74,13 +74,20 @@ class AccountController extends Controller
             if ($request->file('profile_photo_path')) {
                 Storage::delete('public/file', $user->profile_photo_path);
                 $file = $request->file('profile_photo_path');
-                $filename = time() . ". {$file->extension()}";
+                $filename = time() . ".{$file->extension()}";
                 $path = $file->storeAs('public/file', $filename);
                 $input['profile_photo_path'] = $path;
             }
 
-            if ($input['password']) {
+            if ($input['password'] != null) {
                 $input['password'] = Hash::make($input['password']);
+            } else {
+                unset($input['password']);
+            }
+
+            if ($input['roleId'] != $user->roles->first()->id) {
+                $role = Role::find($input['roleId']);
+                $user->syncRoles($role->name);
             }
 
             $user = $user->update($input);

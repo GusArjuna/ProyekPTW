@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $users  = [
+        $users  =
             [
                 "name"     => "admin",
                 "username" => "admin",
@@ -24,10 +24,24 @@ class UserSeeder extends Seeder
                 "password" => bcrypt("admin123"),
                 "created_at" => now(),
                 "updated_at" => now(),
-            ]
-        ];
+            ];
 
-        $user = User::insert($users);
+        $user = User::create($users);
         $user->assignRole('admin');
+
+        $users  =
+            [
+                "name"     => "user",
+                "username" => "user",
+                "email"    => "user@gmail.com",
+                "nbi"      => "190123001901",
+                "email_verified_at" => now(),
+                "password" => bcrypt("password"),
+                "created_at" => now(),
+                "updated_at" => now(),
+            ];
+
+        $user = User::create($users);
+        $user->assignRole('user');
     }
 }

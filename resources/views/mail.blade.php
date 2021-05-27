@@ -5,7 +5,7 @@
     @if(Session::has('success'))
     {{Session::get('success')}}
     @endif
-    <form action="{{url('/sendmail')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('mails.send')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="container mt-5 mb-5">
             <h3>E-Mail</h3>

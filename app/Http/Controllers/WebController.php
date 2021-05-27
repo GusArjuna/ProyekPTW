@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class WebController extends Controller
 {
@@ -41,7 +42,7 @@ class WebController extends Controller
             'subject' => $req->subject
         ];
 
-        \Mail::to($req->emailTujuan)->send(new \App\Mail\MyTestMail($details));
+        Mail::to($req->emailTujuan)->send(new \App\Mail\MyTestMail($details));
         return redirect()->back()->with('success', 'Pesan Sudah Terkirim');
     }
     public function vidcon()

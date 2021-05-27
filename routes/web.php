@@ -17,12 +17,25 @@ Route::get('/', 'WebController@dashboard');
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/', 'DashboardController@index');
 
+    Route::group(['prefix' => 'signatures'], function () {
+        Route::get('/', 'SignatureController@index')->name('signatures.index');
+        Route::post('/', 'SignatureController@store')->name('signatures.store');
+        Route::put('/{id}', 'SignatureController@update')->name('signatures.update');
+    });
 
-    Route::get('/signatures', 'WebController@signature')->name('signatures.index');
+    Route::group(['prefix' => 'conferences'], function () {
+        Route::get('/', 'ConferenceController@index')->name('conferences.index');
+        Route::get('/create', 'ConferenceController@create')->name('conferences.create');
+        Route::post('/', 'ConferenceController@store')->name('conferences.store');
+        Route::delete('/{id}', 'ConferenceController@destroy')->name('conferences.destroy');
+    });
+
     Route::get('/mails', 'WebController@mail')->name('mails.index');
-    Route::get('/videoconferences', 'WebController@vidcon')->name('videoconferences.index');
+
 
     Route::resource('accounts', "AccountController");
 
-    Route::post('/sendmails', 'WebController@sendmail');
+    Route::post('/sendmails', 'WebController@sendmail')->name('mails.send');
 });
+
+Route::get('/checkbarcode/{id}', 'SignatureController@checkBarcode')->name('signatures.checkBarcode');
