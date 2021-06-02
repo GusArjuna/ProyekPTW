@@ -11,7 +11,6 @@ class InviteNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $meeting;
     /**
      * Create a new message instance.
      *
@@ -29,12 +28,8 @@ class InviteNotificationMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.new_blog')
-                    ->subject('this is test email subject')  //<= how to pass variable on this subject
-                    ->with([
-                        'title'     => $this->blog->title, //this works without queue
-                        'content'     => $this->blog->title, //this works without queue
-                    ]);
-        }
+        $date = json_decode($this->meeting->details);
+        $datetime = date('Y-m-d H:i:s', strtotime($date->start_time));
+        return $this->markdown('emails.invitationMail')->with(['meeting' => $this->meeting, 'datetime' => $datetime]);
     }
 }

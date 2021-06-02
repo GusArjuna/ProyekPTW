@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\InivatationMailJob;
 use App\Models\Meeting;
 use App\Models\User;
 use Carbon\Carbon;
@@ -54,9 +55,9 @@ class ConferenceController extends Controller
                 'waiting_room' => false,
             ]);
 
-            // $users = User::whereHas('roles', function ($query) {
-            //     return $query->where('name', 'user');
-            // })->get();
+            $users = User::whereHas('roles', function ($query) {
+                return $query->where('name', 'user');
+            })->get();
 
             // foreach ($users as $user) {
             //     $registrants = Zoom::meetingRegistrant()->make([
@@ -105,11 +106,12 @@ class ConferenceController extends Controller
 
 
             // send email notification to all user
-            
+            foreach ($users as $key => $value) {
+                dispatch(new InivatationMailJob($value->email, $meetingModel));
+            }
 
             return redirect()->route('conferences.index')->with('message', 'Conference Successfully');
         } catch (\Exception $th) {
-            dd($th);
             return redirect()->back()->with('message', 'Gagal membuat conferences');
         }
     }
@@ -125,12 +127,12 @@ class ConferenceController extends Controller
 
             $meetingZoom = $this->zoomModel::meeting()->find($meetingModel->uuid);
 
-            if ($meetingZoom == null) {
-                abort(404);
+            if ($meetingZoom != null) {
+                $meetingZoom->delete();
             }
 
             $meetingModel->delete();
-            $meetingZoom->delete();
+            
             return redirect()->back()->with('message', 'Conference Successfully deleted');
         } catch (\Exception $th) {
             return redirect()->back()->with('message', 'Conference Failed');
