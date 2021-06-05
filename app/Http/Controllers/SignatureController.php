@@ -100,4 +100,17 @@ class SignatureController extends Controller
 
         return view('signatures.checkBarcode', compact('userDetail'));
     }
+
+    public function download($id)
+    {
+        $userDetailId = Crypt::decryptString($id);
+
+        $userDetail = $this->userDetailModel::find($userDetailId);
+
+        if ($userDetail == null) {
+            abort(404);
+        }
+
+        return view('signatures.download', compact('userDetail'));
+    }
 }

@@ -17,15 +17,17 @@ class InivatationMailJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     protected $email;
     protected $meeting;
+    protected $attendences;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($email, $meeting)
+    public function __construct($email, $meeting, $attendences = null)
     {
         $this->email = $email;
         $this->meeting = $meeting;
+        $this->attendences = $attendences;
     }
 
     /**
@@ -36,7 +38,7 @@ class InivatationMailJob implements ShouldQueue
     public function handle()
     {
         try {
-            Mail::to($this->email)->send(new InviteNotificationMail($this->meeting));
+            Mail::to($this->email)->send(new InviteNotificationMail($this->meeting, $this->attendences));
         } catch (\Exception $e) {
             $this->failed($e);
         }
@@ -44,6 +46,6 @@ class InivatationMailJob implements ShouldQueue
 
     public function failed($exception)
     {
-        Log::error('[job_invitation_zoom] => '.$exception);
+        Log::error('[job_invitation_zoom] => ' . $exception);
     }
 }

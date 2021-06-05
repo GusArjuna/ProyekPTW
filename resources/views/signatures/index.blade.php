@@ -84,29 +84,9 @@
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             @else
                                 <button type="submit" class="btn btn-warning">Simpan</button>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modelBarcode">
+                                <a href="{{route('signatures.download', Crypt::encryptString($userDetail->id))}}" target="_blank" class="btn btn-primary">
                                     Check Barcode
-                                </button>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="modelBarcode" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Scan Barcode</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                            </div>
-                                            <div class="modal-body" style="text-align: center">
-                                                <img src="data:image/png;base64,{{$userDetail->barcode }}" alt="barcode"  class="img-thumbnail" />
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </a>
                             @endif
                         </div>
                     </div>

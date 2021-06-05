@@ -16,9 +16,10 @@ class InviteNotificationMail extends Mailable
      *
      * @return void
      */
-    public function __construct($meeting)
+    public function __construct($meeting, $attendences = null)
     {
         $this->meeting = $meeting;
+        $this->attendences = $attendences;
     }
 
     /**
@@ -30,6 +31,6 @@ class InviteNotificationMail extends Mailable
     {
         $date = json_decode($this->meeting->details);
         $datetime = date('Y-m-d H:i:s', strtotime($date->start_time));
-        return $this->markdown('emails.invitationMail')->with(['meeting' => $this->meeting, 'datetime' => $datetime]);
+        return $this->markdown('emails.invitationMail')->with(['meeting' => $this->meeting, 'datetime' => $datetime, 'attendences' => $this->attendences]);
     }
 }

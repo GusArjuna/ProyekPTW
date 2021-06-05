@@ -46,6 +46,11 @@
                         <span>Manajemen Akun</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{route('attendences.index')}}">
+                        <span>Data Presensi</span>
+                    </a>
+                </li>
             @elseif(auth()->user()->hasRole('user'))
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{route('signatures.index')}}">
@@ -53,7 +58,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#!">
+                    <a class="nav-link collapsed" href="{{route('conferencesPublic.index')}}">
                         <span>Conferences</span>
                     </a>
                 </li>

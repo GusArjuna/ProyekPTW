@@ -11,6 +11,10 @@ Invitation link zoom in below :
 Join zoom
 @endcomponent
 
+@component('mail::button', ['url' => route('attendences.presensi', $attendences->id)])
+Link Presensi
+@endcomponent
+
 Thanks,<br>
 {{ config('app.name') }}
 @endcomponent

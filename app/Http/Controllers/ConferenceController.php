@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\InivatationMailJob;
+use App\Models\Attendece;
 use App\Models\Meeting;
 use App\Models\User;
 use Carbon\Carbon;
@@ -104,10 +105,18 @@ class ConferenceController extends Controller
                 "settings" => json_encode($meeting['settings']),
             ]);
 
+            // create presensi
+            $attendences = new Attendece();
+            $attendences->title = $request['title'];
+            $attendences->date_start = $request['date_start'];
+            $attendences->date_end = $request['date_end'];
+            $attendences->description = $request['description'];
+            $attendences->meeting_id = $meetingModel->id;
+            $attendences->save();
 
             // send email notification to all user
             foreach ($users as $key => $value) {
-                dispatch(new InivatationMailJob($value->email, $meetingModel));
+                dispatch(new InivatationMailJob($value->email, $meetingModel, $attendences));
             }
 
             return redirect()->route('conferences.index')->with('message', 'Conference Successfully');
@@ -132,10 +141,16 @@ class ConferenceController extends Controller
             }
 
             $meetingModel->delete();
-            
+
             return redirect()->back()->with('message', 'Conference Successfully deleted');
         } catch (\Exception $th) {
-            return redirect()->back()->with('message', 'Conference Failed');
+            $meetingModel->delete();
+            return redirect()->back();
         }
+    }
+
+    public function indexPublic() {
+        $conferences = Meeting::with('attendences')->get();
+        return view('conferences.public.index', compact('conferences'));
     }
 }
