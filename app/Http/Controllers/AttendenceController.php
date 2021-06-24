@@ -85,7 +85,15 @@ class AttendenceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $attendences = Attendece::find($id);
+
+        if(empty($attendences)) {
+            return abort(404);
+        }
+
+        $attendences->delete();
+        $attendences->attendencesUser()->delete();
+        return redirect()->back()->with('message', 'Data berhasil dihapus');
     }
 
     public function presensi($presensiId)
