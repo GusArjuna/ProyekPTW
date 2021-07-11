@@ -8,7 +8,7 @@
         <h3>List Presensi</h3>
         <div class="row">
             <div class="col-md-12 mb-2">
-                <a href="{{route('conferences.create')}}" class="btn btn-primary">Add New Presensi</a>
+                <a href="{{route('attendences.create')}}" class="btn btn-primary">Add New Presensi</a>
             </div>
             <div class="col-md-12">
                 <table class="table table-striped table-inverse table-presensi">

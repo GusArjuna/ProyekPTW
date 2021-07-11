@@ -28,7 +28,7 @@
                             </div>
                             <div class="col">
                                 <label for="">Password Conferences</label>
-                            <input type="text" class="form-control" name="password" required>
+                            <input type="text" class="form-control" name="password">
                             </div>
                         </div>
                     </div>

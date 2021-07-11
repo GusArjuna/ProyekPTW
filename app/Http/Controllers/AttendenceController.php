@@ -29,7 +29,7 @@ class AttendenceController extends Controller
      */
     public function create()
     {
-        //
+        return view('attendences.create');
     }
 
     /**
@@ -40,6 +40,15 @@ class AttendenceController extends Controller
      */
     public function store(Request $request)
     {
+        // create presensi
+        $attendences = new Attendece();
+        $attendences->title = $request['title'];
+        $attendences->date_start = $request['date_start'];
+        $attendences->date_end = $request['date_end'];
+        $attendences->description = $request['description'];
+        $attendences->save();
+
+        return redirect()->route('attendences.index')->with('message', 'Data berhasil di simpan');
     }
 
     /**
